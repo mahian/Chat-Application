@@ -74,6 +74,8 @@ const ChatPage = () => {
 
   const [attachedFiles, setAttachedFiles] = useState<File[]>([]); // To store files attached to messages
 
+  const [theme, setTheme] = useState<'light' | 'dark'>('light'); // to deside the theme mood
+
   /**
    *  A  function to update the last message of a specified chat to update the chat list
    */
@@ -345,6 +347,21 @@ const ChatPage = () => {
     ]);
   };
 
+  // Check the initial theme on load
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    setTheme(savedTheme || (prefersDark ? 'dark' : 'light'))
+  }, [])
+
+  // Apply the theme and save it in localStorage
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark')
+
   useEffect(() => {
     // Fetch the chat list from the server.
     getChats();
@@ -425,15 +442,29 @@ const ChatPage = () => {
 
       <div className="w-full justify-between items-stretch h-screen flex flex-shrink-0">
         <div className="w-1/3 relative ring-white overflow-y-auto px-4">
-          <div className="z-10 w-full sticky top-0 bg-dark py-4 flex justify-between items-center gap-4">
-            <button
-              type="button"
-              className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-xl text-sm px-5 py-4 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 flex-shrink-0"
-              onClick={logout}
-            >
-              Log Out
-            </button>
+          <div className="py-4 border-b flex items-center justify-between dark:border-gray-700">
+            <h2 className="text-2xl font-bold">Chats</h2>
+            <div className="flex items-center">
+              <button onClick={toggleTheme}
+                id="themeToggle" className="text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-gray-200 transition flex items-center mr-4">
+                  {theme === 'dark' ? (
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" />
+                  </svg>):(
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.72 9.72 0 0 1 18 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 0 0 3 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 0 0 9.002-5.998Z" />
+                </svg>)}
 
+              </button>
+              <button onClick={logout} className="text-gray-600 dark:text-gray-300 hover:text-red-500 transition flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7" />
+                </svg>
+                Logout
+              </button>
+            </div>
+          </div>
+          <div className="py-4 border-b flex space-x-2 dark:border-gray-700">
             <Input
               placeholder="Search user or group..."
               value={localSearchQuery}
@@ -441,11 +472,10 @@ const ChatPage = () => {
                 setLocalSearchQuery(e.target.value.toLowerCase())
               }
             />
-            <button
-              onClick={() => setOpenAddChat(true)}
-              className="rounded-xl border-none bg-primary text-white py-4 px-5 flex flex-shrink-0"
-            >
-              + Add chat
+            <button onClick={() => setOpenAddChat(true)} className="bg-blue-500 dark:bg-blue-600 text-white p-2 h-12 w-12 rounded-lg hover:bg-blue-600 dark:hover:bg-blue-700 transition flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+              </svg>
             </button>
           </div>
           {loadingChats ? (
@@ -460,10 +490,10 @@ const ChatPage = () => {
                 // If there's a localSearchQuery, filter chats that contain the query in their metadata title
                 localSearchQuery
                   ? getChatObjectMetadata(chat, user!)
-                      .title?.toLocaleLowerCase()
-                      ?.includes(localSearchQuery)
+                    .title?.toLocaleLowerCase()
+                    ?.includes(localSearchQuery)
                   : // If there's no localSearchQuery, include all chats
-                    true
+                  true
               )
               .map((chat) => {
                 return (
@@ -499,10 +529,10 @@ const ChatPage = () => {
               })
           )}
         </div>
-        <div className="w-2/3 border-l-[0.1px] border-secondary">
+        <div className="w-2/3">
           {currentChat.current && currentChat.current?._id ? (
             <>
-              <div className="p-4 sticky top-0 bg-dark z-20 flex justify-between items-center w-full border-b-[0.1px] border-secondary">
+              <div className="p-4 bg-white dark:bg-gray-800 shadow-md border-b dark:border-gray-700 flex items-center space-x-4">
                 <div className="flex justify-start items-center w-max gap-3">
                   {currentChat.current.isGroupChat ? (
                     <div className="w-12 relative h-12 flex-shrink-0 flex justify-start items-center flex-nowrap">
@@ -518,10 +548,10 @@ const ChatPage = () => {
                                 i === 0
                                   ? "left-0 z-30"
                                   : i === 1
-                                  ? "left-2 z-20"
-                                  : i === 2
-                                  ? "left-4 z-10"
-                                  : ""
+                                    ? "left-2 z-20"
+                                    : i === 2
+                                      ? "left-4 z-10"
+                                      : ""
                               )}
                             />
                           );
@@ -608,7 +638,7 @@ const ChatPage = () => {
                   })}
                 </div>
               ) : null}
-              <div className="sticky top-full p-4 flex justify-between items-center w-full gap-2 border-t-[0.1px] border-secondary">
+              <div className="p-4 bg-white dark:bg-gray-800 border-t dark:border-gray-700 flex items-center space-x-4">
                 <input
                   hidden
                   id="attachments"
@@ -624,7 +654,7 @@ const ChatPage = () => {
                 />
                 <label
                   htmlFor="attachments"
-                  className="p-4 rounded-full bg-dark hover:bg-secondary"
+                  className="p-4 rounded-full hover:bg-secondary"
                 >
                   <PaperClipIcon className="w-6 h-6" />
                 </label>
@@ -642,7 +672,7 @@ const ChatPage = () => {
                 <button
                   onClick={sendChatMessage}
                   disabled={!message && attachedFiles.length <= 0}
-                  className="p-4 rounded-full bg-dark hover:bg-secondary disabled:opacity-50"
+                  className="p-4 rounded-full hover:bg-secondary disabled:opacity-50"
                 >
                   <PaperAirplaneIcon className="w-6 h-6" />
                 </button>

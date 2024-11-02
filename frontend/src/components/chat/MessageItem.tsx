@@ -17,7 +17,7 @@ const MessageItem: React.FC<{
   deleteChatMessage: (message: ChatMessageInterface) => void;
 }> = ({ message, isOwnMessage, isGroupChatMessage, deleteChatMessage }) => {
   const [resizedImage, setResizedImage] = useState<string | null>(null);
-  const [openOptions, setopenOptions] = useState<boolean>(false); //To open delete menu option on hover
+  const [openOptions, setopenOptions] = useState<boolean>(false); //To open delete menu option on hover  
 
   return (
     <>
@@ -44,17 +44,17 @@ const MessageItem: React.FC<{
           src={message.sender?.avatar?.url}
           className={classNames(
             "h-7 w-7 object-cover rounded-full flex flex-shrink-0",
-            isOwnMessage ? "order-2" : "order-1"
+            isOwnMessage ? "hidden" : ""
           )}
         />
         {/* message box have to add the icon onhover here */}
         <div
           onMouseLeave={() => setopenOptions(false)}
           className={classNames(
-            " p-4 rounded-3xl flex flex-col cursor-pointer group hover:bg-secondary",
+            "rounded-lg p-3 max-w-xs shadow group",
             isOwnMessage
-              ? "order-1 rounded-br-none bg-primary"
-              : "order-2 rounded-bl-none bg-secondary"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-800"
           )}
         >
           {isGroupChatMessage && !isOwnMessage ? (
