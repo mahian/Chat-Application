@@ -10,7 +10,7 @@ import {
   getUserChats,
   sendMessage,
 } from "../api";
-import AddChatModal from "../components/chat/AddChatModal";
+import AddChatModal from "../components/chat/AddChatModal"; 
 import ChatItem from "../components/chat/ChatItem";
 import MessageItem from "../components/chat/MessageItem";
 import Typing from "../components/chat/Typing";
