@@ -637,7 +637,7 @@ const ChatPage = () => {
                     })}
                   </div>
                 ) : null}
-                <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex items-center">
+                <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex items-center gap-3">
                   <input
                     hidden
                     id="attachments"
@@ -653,7 +653,7 @@ const ChatPage = () => {
                   />
                   <label
                     htmlFor="attachments"
-                    className="p-4 rounded-full hover:bg-secondary"
+                    className="p-4 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
                   >
                     <PaperClipIcon className="w-6 h-6" />
                   </label>
@@ -671,7 +671,7 @@ const ChatPage = () => {
                   <button
                     onClick={sendChatMessage}
                     disabled={!message && attachedFiles.length <= 0}
-                    className="p-4 rounded-full hover:bg-secondary disabled:opacity-50"
+                    className="p-4 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 disabled:opacity-50"
                   >
                     <PaperAirplaneIcon className="w-6 h-6" />
                   </button>
