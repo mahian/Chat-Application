@@ -55,7 +55,7 @@ const ChatItem: React.FC<{
         onClick={() => onClick(chat)}
         onMouseLeave={() => setOpenOptions(false)}
         className={classNames(
-          "contact-item flex gap-2 my-4 justify-between p-3 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg cursor-pointer transition group",
+          "p-4 hover:bg-gray-200 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-200 dark:border-gray-700 flex items-center gap-3 group",
           isActive ? "bg-gray-200 dark:bg-gray-700" : "",
           unreadCount > 0
             ? "font-bold"
@@ -150,7 +150,7 @@ const ChatItem: React.FC<{
             </small>
           </div>
         </div>
-        <div className="flex text-white/50 h-full text-sm flex-col justify-between items-end">
+        <div className="flex h-full text-sm flex-col justify-between items-end">
           <small className="mb-2 inline-flex flex-shrink-0 w-max">
             {moment(chat.updatedAt).add("TIME_ZONE", "hours").fromNow(true)}
           </small>

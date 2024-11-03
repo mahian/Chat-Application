@@ -1,5 +1,4 @@
 // Import necessary components and hooks
-import { LockClosedIcon } from "@heroicons/react/20/solid";
 import { useState } from "react";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -32,46 +31,72 @@ const Register = () => {
 
   return (
     // Register form UI
-    <div className="flex justify-center items-center flex-col h-screen w-screen">
-      <h1 className="text-3xl font-bold">FreeAPI Chat App</h1>
-      <div className="max-w-5xl w-1/2 p-8 flex justify-center items-center gap-5 flex-col bg-dark shadow-md rounded-2xl my-16 border-secondary border-[1px]">
-        <h1 className="inline-flex items-center text-2xl mb-4 flex-col">
-          {/* Lock icon */}
-          <LockClosedIcon className="h-8 w-8 mb-2" /> Register
-        </h1>
-        {/* Input fields for username, password, and email */}
-        <Input
-          placeholder="Enter the email..."
-          type="email"
-          value={data.email}
-          onChange={handleDataChange("email")}
-        />
-        <Input
-          placeholder="Enter the username..."
-          value={data.username}
-          onChange={handleDataChange("username")}
-        />
-        <Input
-          placeholder="Enter the password..."
-          type="password"
-          value={data.password}
-          onChange={handleDataChange("password")}
-        />
-        {/* Register button */}
-        <Button
-          fullWidth
-          disabled={Object.values(data).some((val) => !val)}
-          onClick={handleRegister}
-        >
-          Register
-        </Button>
-        {/* Login link */}
-        <small className="text-zinc-300">
-          Already have an account?{" "}
-          <a className="text-primary hover:underline" href="/login">
-            Login
-          </a>
-        </small>
+    <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+      <nav className="bg-white dark:bg-gray-800 shadow-sm fixed top-0 w-full">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex items-center">
+              <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">ChatApp</span>
+            </div>
+            <div className="flex items-center">
+              <button className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                <i className="fas fa-moon"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+
+      <div className="min-h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-md">
+          <h2 className="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+            Create a new account
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+            Or
+            <a href="/login" className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-500">
+              {' '}sign in to your account
+            </a>
+          </p>
+        </div>
+
+        <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 space-y-3">
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Email address
+          </label>
+          <Input
+            placeholder="Enter the email..."
+            type="email"
+            value={data.email}
+            onChange={handleDataChange("email")}
+          />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            User Name
+          </label>
+          <Input
+            placeholder="Enter the username..."
+            value={data.username}
+            onChange={handleDataChange("username")}
+          />
+          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            Password
+          </label>
+          <Input
+            placeholder="Enter the password..."
+            type="password"
+            value={data.password}
+            onChange={handleDataChange("password")}
+          />
+          {/* Register button */}
+          <Button
+            fullWidth
+            disabled={Object.values(data).some((val) => !val)}
+            onClick={handleRegister}
+          >
+            Register
+          </Button>
+        </div>
       </div>
     </div>
   );

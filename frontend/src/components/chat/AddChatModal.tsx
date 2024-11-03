@@ -151,7 +151,7 @@ const AddChatModal: React.FC<{
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
               <Dialog.Panel
-                className="relative transform overflow-x-hidden rounded-lg bg-dark px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6"
+                className="relative transform mt-8 sm:mx-auto sm:w-full sm:max-w-xl bg-white dark:bg-gray-800 py-8 px-4 shadow sm:rounded-lg sm:px-10 space-y-3"
                 style={{
                   overflow: "inherit",
                 }}
@@ -160,7 +160,7 @@ const AddChatModal: React.FC<{
                   <div className="flex justify-between items-center">
                     <Dialog.Title
                       as="h3"
-                      className="text-lg font-semibold leading-6 text-white"
+                      className="text-lg font-semibold leading-6 text-gray-900 dark:text-white"
                     >
                       Create chat
                     </Dialog.Title>
@@ -197,7 +197,7 @@ const AddChatModal: React.FC<{
                     <Switch.Label as="span" className="ml-3 text-sm">
                       <span
                         className={classNames(
-                          "font-medium text-white",
+                          "font-medium text-gray-900 dark:text-white",
                           isGroupChat ? "" : "opacity-40"
                         )}
                       >
@@ -245,7 +245,7 @@ const AddChatModal: React.FC<{
                     <div className="my-5">
                       <span
                         className={classNames(
-                          "font-medium text-white inline-flex items-center"
+                          "font-medium text-gray-900 dark:text-white inline-flex items-center"
                         )}
                       >
                         <UserGroupIcon className="h-5 w-5 mr-2" /> Selected
@@ -259,14 +259,14 @@ const AddChatModal: React.FC<{
                           ?.map((participant) => {
                             return (
                               <div
-                                className="inline-flex bg-secondary rounded-full p-2 border-[1px] border-zinc-400 items-center gap-2"
+                                className="inline-flex bg-gray-200 dark:bg-gray-700 rounded-full p-2 border-[1px] border-zinc-400 items-center gap-2"
                                 key={participant._id}
                               >
                                 <img
                                   className="h-6 w-6 rounded-full object-cover"
                                   src={participant.avatar.url}
                                 />
-                                <p className="text-white">
+                                <p className="">
                                   {participant.username}
                                 </p>
                                 <XCircleIcon
@@ -290,9 +290,8 @@ const AddChatModal: React.FC<{
                 <div className="mt-5 flex justify-between items-center gap-4">
                   <Button
                     disabled={creatingChat}
-                    severity={"secondary"}
                     onClick={handleClose}
-                    className="w-1/2"
+                    className="w-1/2 bg-gray-200 dark:bg-gray-700"
                   >
                     Close
                   </Button>
